@@ -1,6 +1,6 @@
 # Loretta Bank Spring Boot API
 
-Welcome to the Loretta Bank Spring Boot API! This API serves as the backend for the Loretta Bank web application, providing endpoints for user authentication, account management, fund transfers, and transaction history management. This implementation uses Spring Boot, Spring Security, JWT, and PostgreSQL.
+Welcome to the Loretta Bank Spring Boot API, a robust and scalable backend service for the Loretta Bank web application. This API is built with Spring Boot and provides endpoints for user authentication, account management, fund transfers, and transaction history management.
 
 ## Table of Contents
 
@@ -33,47 +33,48 @@ Welcome to the Loretta Bank Spring Boot API! This API serves as the backend for 
 ## Project Structure
 
 ```
-loretta-bank-backend-springboot
+loretta-bank-backend
+│
 ├── src
 │   ├── main
 │   │   ├── java
 │   │   │   └── com
 │   │   │       └── lorettabank
-│   │   │           ├── LorettaBankApplication.java
 │   │   │           ├── config
-│   │   │           │   └── JwtAuthenticationFilter.java
 │   │   │           │   └── SecurityConfig.java
 │   │   │           ├── controller
-│   │   │           │   └── AuthController.java
-│   │   │           │   └── AccountController.java
+│   │   │           │   ├── AuthController.java
+│   │   │           │   ├── AccountController.java
 │   │   │           │   └── TransactionController.java
 │   │   │           ├── model
-│   │   │           │   └── User.java
-│   │   │           │   └── Account.java
+│   │   │           │   ├── User.java
+│   │   │           │   ├── Account.java
 │   │   │           │   └── Transaction.java
 │   │   │           ├── repository
-│   │   │           │   └── UserRepository.java
-│   │   │           │   └── AccountRepository.java
+│   │   │           │   ├── UserRepository.java
+│   │   │           │   ├── AccountRepository.java
 │   │   │           │   └── TransactionRepository.java
+│   │   │           ├── security
+│   │   │           │   ├── JwtAuthenticationFilter.java
+│   │   │           │   └── JwtTokenProvider.java
 │   │   │           ├── service
-│   │   │           │   └── UserService.java
-│   │   │           │   └── AccountService.java
+│   │   │           │   ├── UserService.java
+│   │   │           │   ├── AccountService.java
 │   │   │           │   └── TransactionService.java
-│   │   │           ├── util
-│   │   │           │   └── JwtUtil.java
+│   │   │           └── LorettaBankApplication.java
 │   │   └── resources
-│   │       └── application.properties
-└── pom.xml
+│   │       ├── application.properties
+│   │       └── schema.sql
+│   └── test
+│       └── java
+│           └── com
+│               └── lorettabank
+│                   └── LorettaBankApplicationTests.java
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+└── README.md
 ```
-
-### Directory Structure Overview
-
-- **config**: Contains configuration classes like `JwtAuthenticationFilter` and `SecurityConfig`.
-- **controller**: Contains REST controllers like `AuthController`, `AccountController`, and `TransactionController`.
-- **model**: Contains entity classes like `User`, `Account`, and `Transaction`.
-- **repository**: Contains repository interfaces like `UserRepository`, `AccountRepository`, and `TransactionRepository`.
-- **service**: Contains service classes like `UserService`, `AccountService`, and `TransactionService`.
-- **util**: Contains utility classes like `JwtUtil`.
 
 ## Installation
 
@@ -90,7 +91,7 @@ loretta-bank-backend-springboot
 
     ```bash
     git clone https://github.com/7irelo/loretta-spring-api.git
-    cd loretta-bank-backend-springboot
+    cd loretta-spring-api
     ```
 
 2. Install dependencies and build the project:
@@ -114,7 +115,7 @@ loretta-bank-backend-springboot
 
 4. Initialize the database:
 
-    Ensure PostgreSQL is running and create a database named `loretta_bank`. The application will handle the schema creation.
+    Ensure PostgreSQL is running and the `loretta_bank` database is created.
 
 5. Run the application:
 
@@ -124,58 +125,92 @@ loretta-bank-backend-springboot
 
 ## Usage
 
-Once the application is running, you can access the API at `http://localhost:8080`.
+### Access the API
 
-### Example Requests
-
-- Sign Up:
-
-    ```bash
-    curl -X POST http://localhost:8080/api/auth/signup -H "Content-Type: application/json" -d '{"username":"testuser","password":"password"}'
-    ```
-
-- Log In:
-
-    ```bash
-    curl -X POST http://localhost:8080/api/auth/login -H "Content-Type: application/json" -d '{"username":"testuser","password":"password"}'
-    ```
-
-## API Endpoints
+The API will be accessible at `http://localhost:8080`.
 
 ### Authentication
 
-- **POST** `/api/auth/signup`: Register a new user.
-- **POST** `/api/auth/login`: Authenticate a user and receive a JWT.
+Use the `/api/auth/signup` and `/api/auth/login` endpoints to register and authenticate users. Use the obtained JWT token to access other protected endpoints.
 
-### Accounts
+### Example Requests
 
-- **GET** `/api/accounts`: Retrieve all accounts.
-- **POST** `/api/accounts`: Create a new account.
-- **DELETE** `/api/accounts/{id}`: Delete an account.
+#### Sign Up
+```bash
+POST /api/auth/signup
+Content-Type: application/json
 
-### Transactions
+{
+    "username": "john_doe",
+    "password": "password123",
+    "email": "john@example.com"
+}
+```
 
-- **GET** `/api/transactions`: Retrieve all transactions.
-- **POST** `/api/transactions`: Create a new transaction.
+#### Log In
+```bash
+POST /api/auth/login
+Content-Type: application/json
+
+{
+    "username": "john_doe",
+    "password": "password123"
+}
+```
+
+#### Create Account
+```bash
+POST /api/accounts
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "balance": 1000.00
+}
+```
+
+#### Transfer Funds
+```bash
+POST /api/transactions
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+    "accountId": 1,
+    "amount": 100.00,
+    "type": "transfer"
+}
+```
+
+## API Endpoints
+
+- `POST /api/auth/signup`: Sign up a new user
+- `POST /api/auth/login`: Log in an existing user
+- `POST /api/auth/logout`: Log out the current user
+- `GET /api/accounts`: Get accounts for a user
+- `POST /api/accounts`: Create a new account
+- `PUT /api/accounts/{id}`: Update an account
+- `DELETE /api/accounts/{id}`: Delete an account
+- `GET /api/transactions`: Get transactions for an account
+- `POST /api/transactions`: Create a new transaction
 
 ## Contributing
 
-1. Fork the repository.
-2. Create your feature branch: `git checkout -b feature/feature-name`
-3. Commit your changes: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin feature/feature-name`
-5. Open a pull request.
+We welcome contributions! Please fork the repository and create a pull request with your changes. Ensure that your code adheres to the coding standards and includes necessary tests.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
-For any inquiries, please reach out to:
+For any inquiries or issues, please contact:
 
-- **Name**: Eric Ncube
-- **Email**: tirelo.eric@gmail.com
-- **GitHub**: [7irelo](https://github.com/7irelo)
+- Name: Eric Ncube
+- Email: tirelo.eric@gmail.com
+- GitHub: [7irelo](https://github.com/7irelo)
 
-Thank you for using Loretta Bank Spring Boot API!
+---
+
+Feel free to customize the content based on your project's specific details and requirements.

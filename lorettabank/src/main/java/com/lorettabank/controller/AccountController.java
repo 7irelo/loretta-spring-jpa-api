@@ -10,22 +10,28 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
-
     @Autowired
     private AccountService accountService;
 
     @GetMapping
-    public List<Account> getAllAccounts() {
-        return accountService.getAllAccounts();
+    public List<Account> getAccounts(@RequestParam Long userId) {
+        return accountService.findByUserId(userId);
     }
 
     @PostMapping
     public Account createAccount(@RequestBody Account account) {
-        return accountService.saveAccount(account);
+        return accountService.save(account);
+    }
+
+    @PutMapping("/{id}")
+    public Account updateAccount(@PathVariable Long id, @RequestBody Account account) {
+        account.setId(id);
+        return accountService.save(account);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAccount(@PathVariable Long id) {
-        accountService.deleteAccount(id);
+    public String deleteAccount(@PathVariable Long id) {
+        accountService.deleteById(id);
+        return "Account deleted";
     }
 }

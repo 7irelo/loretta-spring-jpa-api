@@ -1,14 +1,23 @@
 package com.lorettabank.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Account {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String accountNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(nullable = false)
     private Double balance;
-    // getters and setters
+
+    @OneToMany(mappedBy = "account")
+    private Set<Transaction> transactions;
+
+    // Getters and Setters
 }

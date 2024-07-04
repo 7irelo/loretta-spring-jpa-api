@@ -1,0 +1,7 @@
+package com.tirelo.springapi;
+
+import org.springframework.web.bind.annotation
+
+@RestController
+public class SpringapiApplication {
+}

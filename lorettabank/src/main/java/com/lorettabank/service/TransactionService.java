@@ -9,15 +9,14 @@ import java.util.List;
 
 @Service
 public class TransactionService {
-
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+    public List<Transaction> findByAccountId(Long accountId) {
+        return transactionRepository.findByAccountId(accountId);
     }
 
-    public Transaction saveTransaction(Transaction transaction) {
+    public Transaction save(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
 }

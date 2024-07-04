@@ -9,19 +9,14 @@ import java.util.List;
 
 @Service
 public class AccountService {
-
     @Autowired
     private AccountRepository accountRepository;
 
-    public List<Account> getAllAccounts() {
-        return accountRepository.findAll();
+    public List<Account> findByUserId(Long userId) {
+        return accountRepository.findByUserId(userId);
     }
 
-    public Account saveAccount(Account account) {
+    public Account save(Account account) {
         return accountRepository.save(account);
-    }
-
-    public void deleteAccount(Long id) {
-        accountRepository.deleteById(id);
     }
 }

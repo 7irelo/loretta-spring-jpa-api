@@ -106,7 +106,7 @@ loretta-bank-backend
 
     ```properties
     server.port=8080
-    spring.datasource.url=jdbc:postgresql://localhost:5432/loretta_bank
+    spring.datasource.url=jdbc:postgresql://localhost:5432/lorettabank
     spring.datasource.username=yourusername
     spring.datasource.password=yourpassword
     spring.jpa.hibernate.ddl-auto=update

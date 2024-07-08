@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LorettaBankApplication {
+public class LorettabankApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LorettaBankApplication.class, args);
+        SpringApplication.run(LorettabankApplication.class, args);
     }
 }

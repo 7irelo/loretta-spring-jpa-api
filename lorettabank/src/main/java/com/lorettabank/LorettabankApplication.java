@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.lorettabank")
 @EntityScan("com.lorettabank.model")
 @EnableJpaRepositories("com.lorettabank.repository")
 public class LorettabankApplication {
@@ -14,3 +14,4 @@ public class LorettabankApplication {
         SpringApplication.run(LorettabankApplication.class, args);
     }
 }
+

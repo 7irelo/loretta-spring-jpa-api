@@ -2,6 +2,7 @@ package com.lorettabank.controller;
 
 import com.lorettabank.model.Account;
 import com.lorettabank.service.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +20,12 @@ public class AccountController {
     }
 
     @PostMapping
-    public Account createAccount(@RequestBody Account account) {
+    public Account createAccount(@Valid @RequestBody Account account) {
         return accountService.save(account);
     }
 
     @PutMapping("/{id}")
-    public Account updateAccount(@PathVariable Long id, @RequestBody Account account) {
+    public Account updateAccount(@PathVariable Long id, @Valid @RequestBody Account account) {
         account.setId(id);
         return accountService.save(account);
     }

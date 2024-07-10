@@ -1,13 +1,17 @@
 package com.lorettabank.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -18,26 +22,41 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(unique = true, nullable = false)
+    @NotBlank(message = "Name is mandatory")
     private String username;
 
     @Column(nullable = false)
+    @NotBlank
     private String password;
 
-    // Additional fields as needed, e.g., email, fullName, roles
+    @Column(unique = true, nullable = false)
+    @Email
+    @NotBlank
+    private String email;
+
+    private String fullName;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> roles = new HashSet<>();
 
     public User() {
         // Default constructor
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, String email, String fullName, Set<String> roles) {
         this.username = username;
         this.password = password;
+        this.email = email;
+        this.fullName = fullName;
+        this.roles = roles;
+    }
+
+    public User(String testuser, String password) {
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Example: Return roles or authorities here if applicable
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override
@@ -84,6 +103,30 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
     // Equals and HashCode methods based on unique identifier (id)
 
     @Override
@@ -106,6 +149,9 @@ public class User implements UserDetails {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 

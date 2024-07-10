@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(scanBasePackages = "com.lorettabank")
 @EntityScan("com.lorettabank.model")
-@EnableJpaRepositories("com.lorettabank.repository")
+@EnableJpaRepositories(basePackages = "com.lorettabank.repository")
 public class LorettabankApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(LorettabankApplication.class, args);
     }
 }
-

@@ -22,18 +22,18 @@
     <developers>
         <developer>
             <id>developer_id</id>
-            <name>Your Name</name>
-            <email>your.email@domain.com</email>
+            <name>Eric Ncube</name>
+            <email>tirelo.eric@gmail.com</email>
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git://github.com/7irelo/loretta-bank.git</connection>
-        <developerConnection>scm:git:ssh://github.com:7irelo/loretta-bank.git</developerConnection>
-        <url>http://github.com/7irelo/loretta-bank</url>
+        <connection>scm:git:git://github.com/7irelo/loretta-spring-api.git</connection>
+        <developerConnection>scm:git:ssh://github.com:7irelo/loretta-spring-api.git</developerConnection>
+        <url>http://github.com/7irelo/loretta-spring-api</url>
         <tag>HEAD</tag>
     </scm>
     <properties>
-        <java.version>17</java.version>
+        <java.version>22</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -69,6 +69,12 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

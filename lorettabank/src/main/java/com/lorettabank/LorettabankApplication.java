@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.lorettabank.model")
 @EnableJpaRepositories("com.lorettabank.repository")
 public class LorettabankApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(LorettabankApplication.class, args);
     }

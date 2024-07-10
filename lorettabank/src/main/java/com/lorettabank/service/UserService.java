@@ -15,11 +15,13 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public User save(User user) {
+        // Encode the user's password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     public User findByUsername(String username) {
+        // Retrieve a user by their username
         return userRepository.findByUsername(username);
     }
 }

@@ -13,10 +13,12 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
 
     public List<Transaction> findByAccountId(Long accountId) {
+        // Retrieve transactions by account ID
         return transactionRepository.findByAccountId(accountId);
     }
 
     public Transaction save(Transaction transaction) {
+        // Save or update a transaction
         return transactionRepository.save(transaction);
     }
 }

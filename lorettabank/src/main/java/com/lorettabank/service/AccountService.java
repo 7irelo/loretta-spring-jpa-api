@@ -13,14 +13,17 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     public List<Account> findByUserId(Long userId) {
+        // Retrieve accounts by user ID
         return accountRepository.findByUserId(userId);
     }
 
     public Account save(Account account) {
+        // Save or update an account
         return accountRepository.save(account);
     }
 
     public void deleteById(Long id) {
+        // Delete an account by ID
         accountRepository.deleteById(id);
     }
 }

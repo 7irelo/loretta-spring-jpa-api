@@ -21,6 +21,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Account> accounts;
 
+    // Constructors, getters, and setters
+
     // Getter for username
     public String getUsername() {
         return username;

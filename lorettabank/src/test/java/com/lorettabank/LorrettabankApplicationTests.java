@@ -8,6 +8,7 @@ class LorettabankApplicationTests {
 
 	@Test
 	void contextLoads() {
+		// This test method ensures that the Spring application context loads successfully
 	}
 
 }

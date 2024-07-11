@@ -31,7 +31,7 @@ public class User implements UserDetails {
 
     @Column(unique = true, nullable = false)
     @Email
-    @NotBlank
+    @NotBlank(message = "Email is mandatory")
     private String email;
 
     private String fullName;

@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS transactions;
+DROP TABLE IF EXISTS accounts;
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(100) UNIQUE NOT NULL,
@@ -8,6 +12,7 @@ CREATE TABLE users (
 CREATE TABLE accounts (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
+    type VARCHAR(50) NOT NULL,
     balance DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );

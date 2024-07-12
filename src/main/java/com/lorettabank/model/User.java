@@ -3,6 +3,7 @@ package com.lorettabank.model;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,13 +11,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -24,26 +24,47 @@ import java.util.stream.Collectors;
 public class User implements UserDetails {
 
     @Id
-    private Long id;
+    @Column(unique = true, nullable = false)
+    @NotBlank(message = "ID Number is mandatory")
+    private String id;
 
     @Column(unique = true, nullable = false)
-    @NotBlank(message = "Name is mandatory")
+    @NotBlank(message = "Username is mandatory")
     private String username;
 
     @Column(nullable = false)
     @NotBlank
     private String password;
 
+    @Column(nullable = false)
+    @NotBlank(message = "First Name is mandatory")
+    private String firstName;
+
+    @Column(nullable = false)
+    @NotBlank(message = "First Name is mandatory")
+    private String lastName;
+
     @Column(unique = true, nullable = false)
     @Email
     @NotBlank(message = "Email is mandatory")
     private String email;
 
-    private String fullName;
+    @Column(unique = true, nullable = false)
+    @NotBlank(message = "Phone Number is mandatory")
+    private String phone;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Address is mandatory")
+    private String address;
+
+    private String occupation;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
+    private Date created = new Date();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roles = new HashSet<>();
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -101,7 +122,7 @@ public class User implements UserDetails {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", fullName='" + fullName + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", roles=" + roles +
                 '}';
     }

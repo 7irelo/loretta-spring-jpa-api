@@ -1,6 +1,6 @@
 package com.lorettabank.service;
 
-import com.lorettabank.model.Transaction;
+import com.lorettabank.model.entity.Transaction;
 import com.lorettabank.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,7 @@
-package com.lorettabank.model;
+package com.lorettabank.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.lorettabank.model.entity.Account;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +15,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "transactions")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

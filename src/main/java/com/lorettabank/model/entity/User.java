@@ -1,5 +1,7 @@
-package com.lorettabank.model;
+package com.lorettabank.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -21,12 +23,13 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements UserDetails {
 
     @Id
     @Column(unique = true, nullable = false)
     @NotBlank(message = "ID Number is mandatory")
-    private String id;
+    private Long id;
 
     @Column(unique = true, nullable = false)
     @NotBlank(message = "Username is mandatory")
@@ -36,10 +39,12 @@ public class User implements UserDetails {
     @NotBlank
     private String password;
 
+    @JsonProperty("name")
     @Column(nullable = false)
     @NotBlank(message = "First Name is mandatory")
     private String firstName;
 
+    @JsonProperty("surname")
     @Column(nullable = false)
     @NotBlank(message = "First Name is mandatory")
     private String lastName;
@@ -69,16 +74,6 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
     }
 
     @Override
@@ -113,8 +108,6 @@ public class User implements UserDetails {
     public int hashCode() {
         return Objects.hash(id);
     }
-
-    // ToString method for debugging and logging
 
     @Override
     public String toString() {

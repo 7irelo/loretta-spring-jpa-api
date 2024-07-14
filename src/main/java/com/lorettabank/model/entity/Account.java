@@ -1,5 +1,6 @@
-package com.lorettabank.model;
+package com.lorettabank.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "accounts")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Account {
 
     @Id

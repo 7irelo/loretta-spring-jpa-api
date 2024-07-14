@@ -1,6 +1,6 @@
 package com.lorettabank.security;
 
-import com.lorettabank.model.User;
+import com.lorettabank.model.entity.User;
 import com.lorettabank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

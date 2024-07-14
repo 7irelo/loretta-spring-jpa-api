@@ -1,6 +1,6 @@
 package com.lorettabank.service;
 
-import com.lorettabank.model.Account;
+import com.lorettabank.model.entity.Account;
 import com.lorettabank.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +25,10 @@ public class AccountService {
     public void deleteById(Long id) {
         // Delete an account by ID
         accountRepository.deleteById(id);
+    }
+
+    public List<Account> balanceLessThan(Double amount) {
+        // Retrieve accounts by Balance
+        return accountRepository.balanceLessThan(amount);
     }
 }

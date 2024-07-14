@@ -1,6 +1,6 @@
 package com.lorettabank.controller;
 
-import com.lorettabank.model.Transaction;
+import com.lorettabank.model.entity.Transaction;
 import com.lorettabank.service.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.lorettabank.service;
 
-import com.lorettabank.model.User;
+import com.lorettabank.model.entity.User;
 import com.lorettabank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +26,6 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    // Optional: Exception handling example
     public User findUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {

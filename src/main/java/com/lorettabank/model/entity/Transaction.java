@@ -1,8 +1,9 @@
 package com.lorettabank.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.lorettabank.model.entity.Account;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,18 +25,27 @@ public class Transaction {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", nullable = false)
+    @NotNull(message = "Account is mandatory")
     private Account account;
 
     @Column(nullable = false)
+    @NotNull(message = "Amount is mandatory")
     private Double amount;
 
     @Column(nullable = false)
+    @NotBlank(message = "Transaction type is mandatory")
     private String type;
 
     @Column(nullable = false)
+    @NotBlank(message = "Description is mandatory")
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private Date timestamp = new Date();
+    private Date timestamp;
+
+    @PrePersist
+    protected void onCreate() {
+        timestamp = new Date();
+    }
 }

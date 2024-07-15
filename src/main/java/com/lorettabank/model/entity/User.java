@@ -13,7 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,8 +26,8 @@ import java.util.stream.Collectors;
 public class User implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    @NotBlank(message = "ID Number is mandatory")
     private Long id;
 
     @Column(unique = true, nullable = false)
@@ -46,7 +45,7 @@ public class User implements UserDetails {
 
     @JsonProperty("surname")
     @Column(nullable = false)
-    @NotBlank(message = "First Name is mandatory")
+    @NotBlank(message = "Last Name is mandatory")
     private String lastName;
 
     @Column(unique = true, nullable = false)
@@ -69,6 +68,8 @@ public class User implements UserDetails {
     private Date created = new Date();
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
     private Set<String> roles = new HashSet<>();
 
     @Override
@@ -119,5 +120,4 @@ public class User implements UserDetails {
                 ", roles=" + roles +
                 '}';
     }
-
 }
